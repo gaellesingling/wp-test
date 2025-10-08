@@ -1,6 +1,31 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+function awpt_allowed_html() : array {
+    $allowed = wp_kses_allowed_html( 'post' );
+
+    foreach ( $allowed as &$attributes ) {
+        if ( ! is_array( $attributes ) ) {
+            continue;
+        }
+
+        $attributes['role']     = true;
+        $attributes['tabindex'] = true;
+        $attributes['aria-*']   = true;
+    }
+    unset( $attributes );
+
+    $allowed['track'] = array(
+        'default' => true,
+        'kind'    => true,
+        'label'   => true,
+        'srclang' => true,
+        'src'     => true,
+    );
+
+    return $allowed;
+}
+
 function awpt_capability() : string {
     return 'manage_options';
 }
@@ -53,19 +78,22 @@ function awpt_admin_state() : array {
             break;
 
         case 'keyboard':
-            $html = isset( $_POST['keyboard_html'] ) ? wp_kses_post( wp_unslash( $_POST['keyboard_html'] ) ) : '';
+            $html = isset( $_POST['keyboard_html'] ) ? wp_unslash( $_POST['keyboard_html'] ) : '';
+            $html = wp_kses( $html, awpt_allowed_html() );
             $state['inputs']['keyboard'] = array( 'html' => $html );
             $state['results']['keyboard'] = AWPT_Accessibility_API::keyboard_audit( $html );
             break;
 
         case 'landmarks':
-            $html = isset( $_POST['landmarks_html'] ) ? wp_kses_post( wp_unslash( $_POST['landmarks_html'] ) ) : '';
+            $html = isset( $_POST['landmarks_html'] ) ? wp_unslash( $_POST['landmarks_html'] ) : '';
+            $html = wp_kses( $html, awpt_allowed_html() );
             $state['inputs']['landmarks'] = array( 'html' => $html );
             $state['results']['landmarks'] = AWPT_Accessibility_API::analyze_landmarks( $html );
             break;
 
         case 'media':
-            $html = isset( $_POST['media_html'] ) ? wp_kses_post( wp_unslash( $_POST['media_html'] ) ) : '';
+            $html = isset( $_POST['media_html'] ) ? wp_unslash( $_POST['media_html'] ) : '';
+            $html = wp_kses( $html, awpt_allowed_html() );
             $state['inputs']['media'] = array( 'html' => $html );
             $state['results']['media'] = AWPT_Accessibility_API::analyze_media_alternatives( $html );
             break;
