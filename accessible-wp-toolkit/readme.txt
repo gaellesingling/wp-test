@@ -24,6 +24,18 @@ Chaque module fonctionne sans recharger la page complète de WordPress et propos
 1. Copier le dossier `accessible-wp-toolkit` dans `wp-content/plugins/`.
 2. Activer le plugin depuis l’admin WordPress.
 
+== Tests ==
+=== Test manuel : Attributs ARIA conservés ===
+1. Ouvrir l’outil correspondant dans l’administration WordPress (Audit clavier, Repères ARIA ou Sous-titres & médias).
+2. Coller l’extrait suivant dans le champ HTML :
+```
+<button tabindex="5">Action prioritaire</button>
+<video controls>
+    <track kind="captions" src="demo.vtt" srclang="fr" label="Français" />
+</video>
+```
+3. Valider l’outil et vérifier que les avertissements concernant le `tabindex="5"` et la présence de la piste `<track kind="captions">` sont bien listés.
+
 == Changelog ==
 = 0.2.0 =
 * Implémentation des 4 outils (contraste, audit clavier, repères, médias)

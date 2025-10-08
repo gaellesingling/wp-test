@@ -1,0 +1,297 @@
+/* Basic reset for the panel */
+:root {
+  --fsp-z: 99999;
+  --fsp-width: min(420px, 90vw);
+  --fsp-radius: 14px;
+  --fsp-shadow: 0 20px 40px rgba(0,0,0,.2);
+}
+.fsp-launcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: var(--fsp-z);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 16px;
+  box-shadow: var(--fsp-shadow);
+  background: #c91e2d;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fsp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: calc(var(--fsp-z) - 1);
+}
+.fsp-overlay[aria-hidden="false"]{
+  opacity: 1;
+  pointer-events: auto;
+}
+.fsp-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: var(--fsp-width);
+  background: #fff;
+  color: #1c1c1c;
+  box-shadow: var(--fsp-shadow);
+  transform: translateX(100%);
+  transition: transform .3s ease;
+  z-index: var(--fsp-z);
+  display: flex;
+  flex-direction: column;
+}
+.fsp-panel[aria-hidden="false"]{
+  transform: translateX(0%);
+}
+.fsp-panel__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+.fsp-title{
+  font-size: 1.125rem;
+  margin: 0;
+  font-weight: 700;
+}
+.fsp-close{
+  border: 0;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px;
+}
+.fsp-panel__body{
+  padding: 12px 16px 120px;
+  overflow: auto;
+  gap: 12px;
+  display: grid;
+}
+.fsp-section{
+  border: 1px solid #e1e1e1;
+  border-radius: var(--fsp-radius);
+  padding: 16px;
+  background: #fafafa;
+}
+.fsp-section h3{
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+}
+.fsp-panel__footer{
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.fsp-btn{
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.fsp-btn.primary{
+  background:#1b6ef3;
+  color:#fff;
+  border-color:#1b6ef3;
+}
+.fsp-btn.secondary{
+  background:#fff;
+  color:#1b1b1b;
+}
+.fsp-btn:hover{
+  background:#e9e9e9;
+}
+.fsp-btn.primary:hover{
+  background:#0f59d0;
+  border-color:#0f59d0;
+}
+.fsp-btn.primary:focus-visible{
+  background:#0f59d0;
+  border-color:#0f59d0;
+}
+.fsp-btn.secondary:hover{
+  background:#f0f0f0;
+}
+.fsp-form{
+  display: grid;
+  gap: 12px;
+}
+.fsp-label{
+  font-weight: 600;
+}
+.fsp-form__controls{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.fsp-input{
+  flex: 1 1 180px;
+  border-radius: 8px;
+  border: 1px solid #c9c9c9;
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+.fsp-input::placeholder{
+  color:#6c6c6c;
+}
+.fsp-toggle-list{
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+.fsp-toggle-list li{
+  list-style: none;
+}
+.fsp-toggle{
+  width: 100%;
+  border-radius: 999px;
+  border: 2px solid #c9c9c9;
+  padding: 10px 16px;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.fsp-toggle.is-active{
+  background: #1b6ef3;
+  border-color: #1b6ef3;
+  color: #fff;
+}
+.fsp-toggle:hover{
+  background:#f0f4ff;
+}
+.fsp-toggle.is-active:hover{
+  background:#0f59d0;
+  border-color:#0f59d0;
+}
+.fsp-select{
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #c9c9c9;
+  padding: 10px 12px;
+  font-size: 1rem;
+  background: #fff;
+  color: #1c1c1c;
+}
+.fsp-settings-list{
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+}
+.fsp-setting{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+}
+.fsp-setting__content{
+  flex: 1;
+  display: grid;
+  gap: 4px;
+}
+.fsp-setting__label{
+  font-weight: 600;
+}
+.fsp-setting__description{
+  font-size: .875rem;
+  color:#4b4b4b;
+}
+.fsp-switch{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.fsp-switch input{
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.fsp-switch__indicator{
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: #c9c9c9;
+  transition: background .2s ease;
+}
+.fsp-switch__indicator::after{
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.fsp-switch input:checked + .fsp-switch__indicator{
+  background: #1b6ef3;
+}
+.fsp-switch input:checked + .fsp-switch__indicator::after{
+  transform: translateX(20px);
+}
+.fsp-switch__text{
+  font-size: .875rem;
+  font-weight: 600;
+}
+.fsp-panel button,
+.fsp-panel input,
+.fsp-panel select{
+  font-family: inherit;
+}
+.fsp-panel button:disabled{
+  cursor: not-allowed;
+  opacity: .6;
+}
+.fsp-btn:focus-visible,
+.fsp-toggle:focus-visible,
+.fsp-select:focus-visible,
+.fsp-input:focus-visible,
+.fsp-switch input:focus-visible + .fsp-switch__indicator{
+  outline: 3px solid #1b6ef3;
+  outline-offset: 2px;
+}
+@media (prefers-color-scheme: dark){
+  .fsp-panel{ background:#18181b; color:#ececec; }
+  .fsp-panel__header, .fsp-panel__footer{ border-color:#2a2a2a; background:#18181b;}
+  .fsp-section{ background:#111113; border-color:#2a2a2a; }
+  .fsp-launcher{ box-shadow:none; }
+  .fsp-btn{ background:#2a2a2a; border-color:#343434; color:#e5e5e5; }
+  .fsp-btn.primary{ background:#3b82f6; border-color:#3b82f6; }
+  .fsp-btn.secondary{ background:#1f1f23; }
+  .fsp-toggle{ background:#1f1f23; border-color:#343434; color:#ececec; }
+  .fsp-toggle.is-active{ background:#3b82f6; border-color:#3b82f6; }
+  .fsp-setting{ background:#1f1f23; border-color:#343434; }
+  .fsp-setting__description{ color:#c4c4c4; }
+  .fsp-select, .fsp-input{ background:#1f1f23; border-color:#343434; color:#ececec; }
+  .fsp-switch__indicator{ background:#3f3f46; }
+  .fsp-switch input:checked + .fsp-switch__indicator{ background:#3b82f6; }
+}
