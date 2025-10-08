@@ -14,15 +14,29 @@ define( 'FSP_VERSION', '0.1.0' );
 define( 'FSP_URL', plugin_dir_url( __FILE__ ) );
 define( 'FSP_PATH', plugin_dir_path( __FILE__ ) );
 
+if ( ! function_exists( 'fsp_get_open_label' ) ) {
+    /**
+     * Retrieve the translated open button label.
+     */
+    function fsp_get_open_label() {
+        $label = apply_filters( 'fsp/open_label', __( 'Open accessibility panel', 'faciliti-side-panel' ) );
+
+        return is_string( $label ) ? $label : '';
+    }
+}
+
 /**
  * Enqueue assets
  */
 add_action( 'wp_enqueue_scripts', function() {
+    $open_label  = fsp_get_open_label();
+    $close_label = __( 'Close panel', 'faciliti-side-panel' );
+
     wp_enqueue_style( 'fsp-panel', FSP_URL . 'assets/css/panel.css', [], FSP_VERSION );
     wp_enqueue_script( 'fsp-panel', FSP_URL . 'assets/js/panel.js', [], FSP_VERSION, true );
     wp_localize_script( 'fsp-panel', 'FSP', [
-        'openLabel'  => __( 'Open accessibility panel', 'faciliti-side-panel' ),
-        'closeLabel' => __( 'Close panel', 'faciliti-side-panel' ),
+        'openLabel'  => $open_label,
+        'closeLabel' => $close_label,
     ]);
 });
 
@@ -30,6 +44,8 @@ add_action( 'wp_enqueue_scripts', function() {
  * Render panel in footer by default
  */
 add_action( 'wp_footer', function() {
+    $fsp_open_label = fsp_get_open_label();
+
     include FSP_PATH . 'templates/panel.php';
 });
 
@@ -38,6 +54,8 @@ add_action( 'wp_footer', function() {
  */
 add_shortcode( 'faciliti_panel', function() {
     ob_start();
+    $fsp_open_label = fsp_get_open_label();
+
     include FSP_PATH . 'templates/panel.php';
     return ob_get_clean();
 });

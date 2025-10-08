@@ -4,8 +4,15 @@
  * Customize freely. Keep IDs/classes to benefit from default JS/CSS.
  */
 ?>
+<?php
+$open_label = isset( $fsp_open_label ) ? $fsp_open_label : fsp_get_open_label();
+
+if ( '' === $open_label ) {
+    $open_label = esc_html__( 'Open accessibility panel', 'faciliti-side-panel' );
+}
+?>
 <button class="fsp-launcher" aria-expanded="false" aria-controls="fsp-panel">
-  <?php echo esc_html( isset( $fsp_open_label ) ? $fsp_open_label : ( isset( $GLOBALS['FSP']['openLabel'] ) ? $GLOBALS['FSP']['openLabel'] : 'Open panel' ) ); ?>
+  <?php echo esc_html( $open_label ); ?>
 </button>
 
 <div class="fsp-overlay" aria-hidden="true"></div>
