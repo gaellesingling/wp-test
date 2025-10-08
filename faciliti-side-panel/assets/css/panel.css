@@ -1,0 +1,120 @@
+/* Basic reset for the panel */
+:root {
+  --fsp-z: 99999;
+  --fsp-width: min(420px, 90vw);
+  --fsp-radius: 14px;
+  --fsp-shadow: 0 20px 40px rgba(0,0,0,.2);
+}
+.fsp-launcher {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: var(--fsp-z);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 16px;
+  box-shadow: var(--fsp-shadow);
+  background: #c91e2d;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fsp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: calc(var(--fsp-z) - 1);
+}
+.fsp-overlay[aria-hidden="false"]{
+  opacity: 1;
+  pointer-events: auto;
+}
+.fsp-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: var(--fsp-width);
+  background: #fff;
+  color: #1c1c1c;
+  box-shadow: var(--fsp-shadow);
+  transform: translateX(100%);
+  transition: transform .3s ease;
+  z-index: var(--fsp-z);
+  display: flex;
+  flex-direction: column;
+}
+.fsp-panel[aria-hidden="false"]{
+  transform: translateX(0%);
+}
+.fsp-panel__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+.fsp-title{
+  font-size: 1.125rem;
+  margin: 0;
+  font-weight: 700;
+}
+.fsp-close{
+  border: 0;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px;
+}
+.fsp-panel__body{
+  padding: 12px 16px 120px;
+  overflow: auto;
+  gap: 12px;
+  display: grid;
+}
+.fsp-section{
+  border: 1px dashed #ddd;
+  border-radius: var(--fsp-radius);
+  padding: 12px;
+  background: #fafafa;
+}
+.fsp-section h3{
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+.fsp-placeholder{
+  color: #7a7a7a;
+  font-style: italic;
+}
+.fsp-panel__footer{
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.fsp-btn{
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.fsp-btn.primary{
+  background:#1b6ef3;
+  color:#fff;
+  border-color:#1b6ef3;
+}
+@media (prefers-color-scheme: dark){
+  .fsp-panel{ background:#18181b; color:#ececec; }
+  .fsp-panel__header, .fsp-panel__footer{ border-color:#2a2a2a; background:#18181b;}
+  .fsp-section{ background:#111113; border-color:#2a2a2a; }
+  .fsp-launcher{ box-shadow:none; }
+}
